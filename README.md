@@ -37,7 +37,7 @@ your using).
 
 # Limitations
 
-Mongo modules don't support directories as modules like NodeJS. This is because parsing package.json is problematic from the shell (e.g. node JSON.parse(), no eval).  If you want to use directory based modules then bootstrap the parts by including an index.js file. Hopefully I'll figure out a remedy for this and
+Mongo modules don't support directories as modules like NodeJS. This is because parsing package.json is problematic from the shell (e.g. no JSON.parse(), no eval).  If you want to use directory based modules then bootstrap the parts by including an index.js file. Hopefully I'll figure out a remedy for this and
 use a proper package.json file instead.
 
 # _mongo-modules.js_'s basic services

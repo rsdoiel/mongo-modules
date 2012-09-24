@@ -69,7 +69,7 @@ var dirname = function (file_path) {
 		return file_path.substr(0,
 			file_path.lastIndexOf(this.delimiter));
 	}
-	return p;
+	return file_path;
 };
 
 exports.delimiter = delimiter;

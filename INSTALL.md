@@ -3,7 +3,7 @@ Installing Mongo Modules
 
 Using git clone the repository to where you want to load it. For this
 example I'm assuming your username is _johndoe_ and your home directory
-is _/home/johndoe_ and you're going to push your _mongo-modules_ directory
+is _/home/johndoe_ and you're going to install _mongo-modules_ directory
 in your home directory.
 
 ```shell

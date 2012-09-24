@@ -104,7 +104,6 @@ sleep, getMemInfo */
 			}
 			
 			
-			console.log("DEBUG module_name:", module_name);
 			this.exports = {};
 			load(module_name);
 			return this.exports;

@@ -45,7 +45,8 @@ use a proper package.json file instead.
 * console.log(), console.error() - mapped to print()
 * require() - load a module
 
-Three demonstration modules come with _mongo-modules.js_ - assert, path and harness. Loading each can be done after installation. E.g.
+Three demonstration modules come with _mongo-modules.js_ - assert, path and harness. Loading each can be done after installation. E.g. from the mongo shell
+do the following commands.
 
 ```JavaScript
 	assert = require("assert");
@@ -53,6 +54,27 @@ Three demonstration modules come with _mongo-modules.js_ - assert, path and harn
 	harness = require("harness");
 ```
 
+If you would like to try the test programs then you need to first load
+the .mongorc.js file then run the test script. Here's and example-
+
+```shell
+	# Load the .mongorc.js file, then load harness_test.js
+	mongo ~/.mongorc.js harness_test.js
+```
+
+The output should look something like-
+
+```shell
+	MongoDB shell version: 2.2.0
+	connecting to: test
+	loading file: /home/johndoe/.mongorc.js
+	loading file: harness_test.js
+	Starting [Testing RunIt()] ...
+		Starting Testing push ...
+	Testing push...
+			Testing push OK
+	Testing RunIt() Success!
+```
 
 
 # Installation

@@ -85,8 +85,8 @@ as the first entry the location of where you've _mongo-modules.js_. It also
 invoke _mongo-modules.js_ via a load statement.
 
 ```JavaScript
-	MONGO_MODULES["/home/johndoe/mongo-modules"];
-	load(MONGO_MODULES + "/mongo-modules.js");
+	MONGO_MODULES["/home/johndoe/mongo-modules", "."];
+	load(MONGO_MODULES[0] + "/mongo-modules.js");
 ```
 
 Now the next time you launch the Mongo shell it should load _mongo-modules.js_

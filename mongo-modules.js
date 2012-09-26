@@ -11,8 +11,8 @@
 // See: http://opensource.org/licenses/bsd-license.php
 //
 /*jslint devel: true, node: true, maxerr: 50, indent: 4, vars: true, sloppy: true */
-/*global ls, pwd, listFiles, hostname, cat, 
-removeFile, load, run, runProgram, 
+/*global ls, pwd, listFiles, hostname, cat,
+removeFile, load, run, runProgram,
 sleep, getMemInfo */
 
 (function (globals, undefined) {
@@ -24,10 +24,23 @@ sleep, getMemInfo */
 		throw "MONGO_MODULES is not defined, check your .mongorc.js file.";
 	}
 
-    // Shim for console.log(), console.error()
-    var Console = function () {
-        return {
-            log: function () {
+	// Shim for console.log(), console.error()
+	var Console = function () {
+		return {
+			log: function () {
+				var i, output = [];
+				for (i = 0; i < arguments.length; i += 1) {
+					if (typeof arguments[i] === "string") {
+						output.push(arguments[i]);
+					} else if (arguments[i].toString !== undefined) {
+						output.push(arguments[i].toString());
+					} else {
+						output.push(arguments[i].toSource());
+					}
+				}
+				print(output.join(" "));
+			},
+			error: function () {
 				var i, output = [];
 				for (i = 0; i < arguments.length; i += 1) {
 					if (typeof arguments[i] === "string") {
@@ -38,23 +51,10 @@ sleep, getMemInfo */
 							output.push(arguments[i].toSource());
 					}
 				}
-                print(output.join(" "));
-            },
-            error: function () {
-				var i, output = [];
-				for (i = 0; i < arguments.length; i += 1) {
-					if (typeof arguments[i] === "string") {
-							output.push(arguments[i]);
-					} else if (arguments[i].toString !== undefined) {
-							output.push(arguments[i].toString());
-					} else {
-							output.push(arguments[i].toSource());
-					}
-				}
-                print("ERROR: " + output.join(" "));
-            }
-        };
-    }, console = new Console();
+				print("ERROR: " + output.join(" "));
+			}
+		};
+	}, console = new Console();
 
 	// Now that we have basic path methods, let's make a require
 	// engine.

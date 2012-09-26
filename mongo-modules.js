@@ -80,8 +80,8 @@ sleep, getMemInfo */
 			var i,
 				j,
 				files = [],
-				load_filename = module.concat(".js$"),
-				reFilename = new RegExp(load_filename),
+				load_filename = module.concat(".js"),
+				reFilename = new RegExp(load_filename + '$'),
 				reDirname = new RegExp(module),
 				module_name;
 			
@@ -100,7 +100,7 @@ sleep, getMemInfo */
 				}
 			}
 			if (module_name === undefined || module_name === false) {
-				throw "Cannot find module " + load_name;
+				throw "Cannot find module " + load_filename;
 			}
 			
 			

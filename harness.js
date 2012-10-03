@@ -11,7 +11,9 @@
 //
 /*jslint devel: true, node: true, maxerr: 50, indent: 4,  vars: true, sloppy: true */
 (function (global, setInterval) {
-	var test_groups = [];
+	var test_groups = [],
+		running_tests = [],
+		complete_called = false;
 	
 	// Push a test batch into harness
 	var push = function (test) {
@@ -24,6 +26,17 @@
 		test_groups.push(test);
 	};
 		
+	var completed = function (label) {
+		complete_called = true;
+		var i = running_tests.indexOf(label);
+		if (i >= 0) {
+			running_tests[i] = "";
+			console.log("\t\t" + label + " OK");
+			return true;
+		}
+		return false;
+	};
+	
 	var RunIt = function (module_name, test_delay) {
 		var int_id;
 				
@@ -42,9 +55,21 @@
 						typeof group_test.callback === "function" &&
 						typeof group_test.label === "string") {
 					console.log("\tStarting " + group_test.label + " ...");
+					running_tests.push(group_test.label);
 					group_test.callback();
-					console.log("\t\t" + group_test.label + " OK");
+					console.log("\t\t" + group_test.label + " called");
 				} else {
+					if (complete_called === false) {
+						throw "harness.completed(label) never called by tests.";
+					}
+					if (running_tests.join("") !== "") {
+						running_tests.forEach(function (item) {
+							if (item.trim() !== "") {
+								console.log("\t\t" + item +
+									" incomplete!");
+							}
+						});
+					}
 					throw module_name.trim() + " Failed!";
 				}
 				group_test = test_groups.shift();

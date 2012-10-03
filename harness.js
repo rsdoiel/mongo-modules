@@ -13,9 +13,7 @@
 var Harness = function (global) {
 	var test_groups = [],
 		running_tests = [],
-		complete_called = false,
-		setInterval = global.setInterval,
-		clearInterval = global.clearInterval;
+		complete_called = false;
 	
 	// Push a test batch into harness
 	var push = function (test) {
@@ -49,8 +47,8 @@ var Harness = function (global) {
 					typeof group_test.label === "string") {
 				console.log("\tStarting " + group_test.label + " ...");
 				running_tests.push(group_test.label);
-				group_test.callback();
 				console.log("\t\t" + group_test.label + " called");
+				group_test.callback();
 			} else if (group_test === undefined) {
 				if (complete_called === false) {
 					throw "harness.completed(label) never called by tests.";
@@ -65,8 +63,10 @@ var Harness = function (global) {
 				} else {
 					console.log(module_name.trim() + " Success!");
 				}
-				if (clearInterval !== undefined) {
+				try {
 					clearInterval(int_id);
+				} catch(err) {
+					console.log("clearInterval() not available");
 				}
 			} else {
 				throw module_name.trim() + " Failed!";
@@ -81,11 +81,11 @@ var Harness = function (global) {
 		}
 	
 		console.log("Starting [" + module_name.trim() + "] ...");
-		if (setInterval === undefined) {
-			console.log("Running without setInterval()");
-			run();
-		} else {
+		try {
 			int_id = setInterval(run, test_delay);
+		} catch(err) {
+			console.log("setInterval() not available.");
+			run();
 		}
 	};
 

@@ -1,20 +1,24 @@
 //
-// Test running harness from Mongo Shell
+// A few tests to see if harness_test.js is working under Mongo's shell (2.2)
 //
-var threw_error = false;
-
-assert = require("assert");
-harness = require("harness");
+// @author: R. S. Doiel, <rsdoiel@gmail.com>
+// copyright (c) 2012 all rights reserved
+//
+// Released under this Simplified BSD License.
+// See: http://opensource.org/licenses/bsd-license.php
+//
+//
+/*jslint devel: true, node: true, maxerr: 50, indent: 4,  vars: true, sloppy: true */
+var path = require("path"),
+	assert = require("assert"),
+	harness = require("harness"),
+	filename = "harness_test.js";
 
 harness.push({callback: function () {
-	console.log("Testing push...");
-}, label: "Testing push"});
+	assert.strictEqual(harness.counts("running"), 1, "Should have on test running for 'Testing push()'");
+	// Now complete the test.
+	harness.completed("Testing push()");
+}, label: "Testing push()"});
+assert.strictEqual(harness.counts("tests"), 1, "Should have one test group defined now.");
 
-threw_error = false;
-try {
-	harness.RunIt("Testing RunIt()");
-} catch (err2) {
-	threw_error = true;
-	console.error(err2);
-}
-assert.equal(threw_error, false, "Should not throw an error on harness.RunIt()");
+harness.RunIt(path.basename(filename));

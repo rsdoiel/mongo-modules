@@ -69,11 +69,11 @@ The output should look something like-
 	connecting to: test
 	loading file: /home/johndoe/.mongorc.js
 	loading file: harness_test.js
-	Starting [Testing RunIt()] ...
-		Starting Testing push ...
-	Testing push...
-			Testing push OK
-	Testing RunIt() Success!
+	Starting [harness_test.js] ...
+		Starting Testing push() ...
+			Testing push() called
+			Testing push() OK
+	harness_test.js Success!
 ```
 
 
@@ -85,12 +85,12 @@ as the first entry the location of where you've _mongo-modules.js_. It also
 invoke _mongo-modules.js_ via a load statement.
 
 ```JavaScript
-	MONGO_MODULES["/home/johndoe/mongo-modules", "."];
+	USER="johndoe";
+	HOME="/home/johndoe";
+	PWD=pwd();
+	MONGO_MODULES=["/home/johndoe/mongo-modules", PWD];
 	load(MONGO_MODULES[0] + "/mongo-modules.js");
 ```
 
 Now the next time you launch the Mongo shell it should load _mongo-modules.js_
 and support the _console.log()_ and _console.error()_ commands.
-
-
-

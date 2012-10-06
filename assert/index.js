@@ -15,7 +15,7 @@
 
 // Make an assert fail
 exports.fail = function (msg) {
-	console.error(msg);
+	throw(msg);
 	return false;
 };
 
@@ -24,7 +24,7 @@ exports.ok = function (expr, msg) {
 	if (expr) {
 		return true;
 	}
-	console.error(msg);
+	throw(msg);
 	return false;
 };
 
@@ -35,7 +35,7 @@ exports.equal = function (expr1, expr2, msg) {
 		return true;
 	}
 	/*jslint eqeq: false */
-	console.error(msg);
+	throw(msg);
 	return false;
 };
 
@@ -46,7 +46,7 @@ exports.notEqual = function (expr1, expr2, msg) {
 		return true;
 	}
 	/*jslint eqeq: false */
-	console.error(msg);
+	throw(msg);
 	return false;
 };
 
@@ -55,7 +55,7 @@ exports.strictEqual = function (expr1, expr2, msg) {
 	if (expr1 === expr2) {
 		return true;
 	}
-	console.error(msg);
+	throw(msg);
 	return false;
 };
 
@@ -64,6 +64,6 @@ exports.strictNotEqual = function (expr1, expr2, msg) {
 	if (expr1 !== expr2) {
 		return true;
 	}
-	console.error(msg);
+	throw(msg);
 	return false;
 };

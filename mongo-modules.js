@@ -16,6 +16,10 @@ removeFile, load, run, runProgram, print,
 sleep, getMemInfo */
 
 (function (globals) {
+	// I've included Douglas Crockford's json_parse function in order 
+	// to support proceessing of package.json files.
+	load("./json_parse.js");
+
 	// Bootstrap by loading the path's module.
 
 	// Bootstrap with the path module first. Then define

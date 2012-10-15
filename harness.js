@@ -36,6 +36,9 @@ var Harness = function (global) {
 		if (test.label === undefined) {
 			throw "missing test label.";
 		}
+		if (test.target === undefined) {
+			test.target = [];
+		}
 		test_groups.push(test);
 	};
 	
@@ -50,9 +53,20 @@ var Harness = function (global) {
 		return false;
 	};
 	
-	var RunIt = function (module_name, test_delay) {
+	var RunIt = function (module_name, test_delay, target) {
 		var int_id;
 	
+		if (target === undefined) {
+			// Guess what we're in
+			target = "unknown";
+			if (require !== undefined) {
+				target = "node@0.8.11";
+			} else if (require === undefined && load !== undefined) {
+				target = "mongo@2.2";
+			} else {
+				target = "browser";
+			}
+		}
 		// run, runs a test group. 
 		var run = function () {
 			var group_test = test_groups.shift();
@@ -63,7 +77,7 @@ var Harness = function (global) {
 				console.log("\tStarting " + group_test.label + " ...");
 				running_tests.push(group_test.label);
 				console.log("\t\t" + group_test.label + " called");
-				group_test.callback();
+				group_test.callback(group_test.label);
 			} else if (group_test === undefined) {
 				if (complete_called === false) {
 					if (clearInterval !== undefined) {
@@ -84,7 +98,7 @@ var Harness = function (global) {
 						}
 					});
 				} else {
-					console.log(module_name.trim() + " Success!");
+					console.log(module_name + " Success!");
 				}
 				try {
 					clearInterval(int_id);
@@ -92,7 +106,7 @@ var Harness = function (global) {
 					console.log("clearInterval() not available");
 				}
 			} else {
-				throw module_name.trim() + " Failed!";
+				throw module_name + " Failed!";
 			}
 		};
 		
@@ -121,11 +135,11 @@ var Harness = function (global) {
 						});
 					}
 				} else {
-					throw module_name.trim() + " Failed!";
+					throw module_name + " Failed!";
 				}
 				group_test = test_groups.shift();
 			}
-			console.log(module_name.trim() + " Success!");
+			console.log(module_name + " Success!");
 		};
 		
 		if (module_name === undefined) {
@@ -135,7 +149,7 @@ var Harness = function (global) {
 			test_delay = 1000;
 		}
 	
-		console.log("Starting [" + module_name.trim() + "] ...");
+		console.log("Starting [" + module_name + "] ...");
 		try {
 			int_id = setInterval(run, test_delay);
 		} catch(err) {

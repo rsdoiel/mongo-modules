@@ -111,7 +111,12 @@ sleep, getMemInfo */
 		}
 
 		this.exports = {};
+		this.module = module_name;
 		load(module_name);
+		// Stub for require.main
+		this.main = function () { 
+			return this.module; 
+		}
 		return this.exports;
 	};
 
@@ -121,6 +126,6 @@ sleep, getMemInfo */
 		return findModule;
 	}, require = new Require();
 
-	globals.console = console;
+ 	globals.console = console;
 	globals.require = require;
 }(this));

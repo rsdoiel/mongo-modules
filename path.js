@@ -47,6 +47,9 @@ var join = function () {
 
 var basename = function (file_path) {
 	var filename;
+	if (!file_path) {
+		return "";
+	}
 	if (file_path.trim() === "" ||
 			file_path.trim() === "/") {
 		return "";

@@ -16,9 +16,6 @@ removeFile, load, run, runProgram, print,
 sleep, getMemInfo */
 
 (function (globals) {
-	// I've included Douglas Crockford's json_parse function in order 
-	// to support proceessing of package.json files.
-	load("./json_parse.js");
 
 	// Bootstrap by loading the path's module.
 
@@ -27,6 +24,10 @@ sleep, getMemInfo */
 	if (globals.MONGO_MODULES === undefined) {
 		throw "MONGO_MODULES is not defined, check your .mongorc.js file.";
 	}
+	
+	// I've included Douglas Crockford's json_parse function in order 
+	// to support proceessing of package.json files.
+	//load("lib/json2.js");
 
 	var log = function () {
 		var i, output = [];
